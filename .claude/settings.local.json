@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:skillhub.cn)",
+      "Bash(curl -fsSL https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com/install/install.sh)",
+      "Bash(bash -s -- --cli-only)",
+      "Bash(skillhub search *)",
+      "Bash(/c/Users/lilub/.local/bin/skillhub search *)",
+      "Read(//c/Users/lilub/.local/bin/**)",
+      "Bash(python *)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(mineru-open-api --version)",
+      "Bash(mkdir -p .claude/skills)",
+      "Bash(cp -r skills/pdftomd/* .claude/skills/pdftomd/)",
+      "Bash(cp -r skills/pdftomd .claude/skills/)",
+      "Bash(mineru-open-api flash-extract *)"
+    ]
+  }
+}
