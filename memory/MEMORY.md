@@ -1,1 +1,0 @@
-- [NN&DL Project 1](project_nndl-p1.md) — Course project requirements, deadline 2026-05-24, MLP + CNN + 2 directions
