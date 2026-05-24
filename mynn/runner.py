@@ -45,10 +45,13 @@ class RunnerM():
                 train_X = X[iteration * self.batch_size : (iteration+1) * self.batch_size]
                 train_y = y[iteration * self.batch_size : (iteration+1) * self.batch_size]
 
+                if train_X.shape[0] == 0:
+                    continue
+
                 logits = self.model(train_X)
                 trn_loss = self.loss_fn(logits, train_y)
                 self.train_loss.append(trn_loss)
-                
+
                 trn_score = self.metric(logits, train_y)
                 self.train_scores.append(trn_score)
 
@@ -58,12 +61,11 @@ class RunnerM():
                 self.optimizer.step()
                 if self.scheduler is not None:
                     self.scheduler.step()
-                
-                dev_score, dev_loss = self.evaluate(dev_set)
-                self.dev_scores.append(dev_score)
-                self.dev_loss.append(dev_loss)
 
                 if (iteration) % log_iters == 0:
+                    dev_score, dev_loss = self.evaluate(dev_set)
+                    self.dev_scores.append(dev_score)
+                    self.dev_loss.append(dev_loss)
                     print(f"epoch: {epoch}, iteration: {iteration}")
                     print(f"[Train] loss: {trn_loss}, score: {trn_score}")
                     print(f"[Dev] loss: {dev_loss}, score: {dev_score}")

@@ -83,7 +83,7 @@ class conv2D(Layer):
             self.b = np.zeros((out_channels))
         else:
             self.W = initialize_method(size=(out_channels,in_channels,kernel_size,kernel_size))
-            self.b = initialize_method(size=(out_channels,1))
+            self.b = initialize_method(size=(out_channels,))
         self.grads = {'W' : None, 'b' : None}
         self.input = None # Record the input for backward process.
 
@@ -174,6 +174,30 @@ class ReLU(Layer):
         assert self.input.shape == grads.shape
         output = np.where(self.input < 0, 0, grads)
         return output
+
+class Flatten(Layer):
+    """
+    Flatten layer to bridge conv2D output [batch, C, H, W] to Linear input [batch, C*H*W].
+    """
+    def __init__(self):
+        super().__init__()
+        self.optimizable = False
+        self.input_shape = None
+
+    def __call__(self, X):
+        return self.forward(X)
+
+    def forward(self, X):
+        self.input_shape = X.shape
+        if X.size == 0:
+            return np.empty((0, int(np.prod(X.shape[1:]))))
+        return X.reshape(X.shape[0], -1)
+
+    def backward(self, grads):
+        if grads.size == 0:
+            return np.empty(self.input_shape)
+        return grads.reshape(self.input_shape)
+
 
 class MultiCrossEntropyLoss(Layer):
     """

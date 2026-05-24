@@ -40,7 +40,7 @@ train_imgs = train_imgs / train_imgs.max()
 valid_imgs = valid_imgs / valid_imgs.max()
 # print(train_labs)     
 
-linear_model = nn.models.Model_MLP([train_imgs.shape[-1], 512, 256, 10], 'ReLU', [1e-4, 1e-4,1e-4])
+linear_model = nn.models.Model_MLP([train_imgs.shape[-1], 128, 10], 'ReLU', [1e-4, 1e-4])
 
 # 加这两行
 test_output = linear_model(valid_imgs[:5])
